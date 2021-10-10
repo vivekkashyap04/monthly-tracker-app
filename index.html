@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Movie App</title>
+    <link
+      href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+    <script
+      src="https://kit.fontawesome.com/d77ac583c4.js"
+      crossorigin="anonymous"
+    ></script>
+  </head>
+  <body>
+    <script
+      crossorigin
+      src="https://unpkg.com/react@17/umd/react.development.js"
+    ></script>
+    <script
+      crossorigin
+      src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"
+    ></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <div id="root"></div>
+    <script type="text/babel">
+      //   class Main extends React.Component {
+      //     constructor(props) {
+      //       super(props);
+      //       this.state = {
+      //         days: '',
+      //         activity: [],
+      //         activities: [],
+      //       };
+      //     }
+      //     handleClick = ({ target }) => {
+      //       const { name, checked, id } = target;
+      //       console.log(name, checked, id);
+
+      //       if (checked) {
+      //         let newArr = this.state.activity;
+      //         newArr.push(name);
+      //         this.setState({
+      //           activity: newArr,
+      //         });
+      //       } else {
+      //         let ar = this.state.activity.findIndex((arr) => arr === name);
+      //         let index = this.state.activity.splice(ar, 1);
+      //         console.log(ar, 'delete');
+      //         this.setState((prevState) => {
+      //           activity: prevState.activity;
+      //         });
+      //       }
+      //       console.log(this.state.activity);
+      //     };
+      //     handleInput = (event) => {
+      //       this.setState({
+      //         days: event.target.value,
+      //       });
+      //     };
+      //     handleSubmit = (event) => {
+      //       console.log(event);
+      //       event.preventDefault();
+      //       if (this.state.inputText !== '') {
+      //         let activity = {
+      //           activityName: this.state.inputText,
+      //           activityDays: this.state.activity,
+      //         };
+      //         this.setState({
+      //           activities: this.state.activities,
+      //           inputText: '',
+      //         });
+      //       }
+      //     };
+      //     render() {
+      //       function getDays() {
+      //         let date = new Date();
+      //         let month = date.getMonth();
+      //         let year = date.getFullYear();
+      //         let NumberofDays = new Date(month, year, 0).getDate();
+      //         let days = [];
+      //         for (var i = 1; i <= NumberofDays; i++) {
+      //           days.push(i);
+      //         }
+      //         return days;
+      //       }
+      //       let days = getDays();
+      //       let date = new Date();
+      //       let month = date.getMonth();
+      //       var months = [
+      //         'January',
+      //         'February',
+      //         'March',
+      //         'April',
+      //         'May',
+      //         'June',
+      //         'July',
+      //         'August',
+      //         'September',
+      //         'October',
+      //         'November',
+      //         'December',
+      //       ];
+      //       let currentMonth = months.filter((val, i, arr) =>
+      //         i === month ? arr[i] : ''
+      //       );
+      //       return (
+      //         <>
+      //           <form onSubmit={this.handleSubmit}>
+      //             <input
+      //               type="text"
+      //               placeholder="eg:coding"
+      //               value={this.state.days}
+      //               onChange={this.handleInput}
+      //             />
+      //             <button type="submit">Submit</button>
+      //           </form>
+      //           {this.state.activities.length > 0 ? (
+      //             <div className="flex-container">
+      //               <div className="col-30 flex">
+      //                 <h1>{this.state.days}</h1>
+      //                 <br />
+      //                 <h2>{currentMonth}</h2>
+      //               </div>
+      //               <div className="col-60">
+      //                 {days.map((day, i) => (
+      //                   <label
+      //                     key={i}
+      //                     className={
+      //                       !this.state.activity.includes(String(day))
+      //                         ? 'true'
+      //                         : 'false'
+      //                     }
+      //                   >
+      //                     <input
+      //                       type="checkbox"
+      //                       name={day}
+      //                       id={i}
+      //                       className="checkbox"
+      //                       onClick={this.handleClick}
+      //                     />
+      //                     <span>{day}</span>
+      //                   </label>
+      //                 ))}
+      //               </div>
+      //             </div>
+      //           ) : (
+      //             ''
+      //           )}
+      //         </>
+      //       );
+      //     }
+      //   }
+
+      function Activity(props) {
+        function getDays(m, y) {
+          let daysInMonth = new Date(y, m, 0).getDate();
+          let days = [];
+          for (let i = 1; i <= daysInMonth; i++) {
+            days.push(i);
+          }
+          return days;
+        }
+
+        var months = [
+          'January',
+          'February',
+          'March',
+          'April',
+          'May',
+          'June',
+          'July',
+          'August',
+          'September',
+          'October',
+          'November',
+          'December',
+        ];
+        let date = new Date();
+        let month = date.getMonth();
+        let year = date.getFullYear();
+        let numberOfDays = getDays(month, year);
+        let activities = props.activities;
+
+        return (
+          <>
+            {activities.map((activity, i) => (
+              <div
+                className="flex shadow-lg p-4 mb-8 text-pink-700 relative rounded-md"
+                key={i}
+              >
+                <div className="flex-30  flex flex-col justify-center items-center p-2">
+                  <h4 className="text-xl font-bold">{activity.activityName}</h4>
+                  <h4 className="inline bg-blue-400 text-white font-bold my-1 p-1 rounded-md">
+                    {months[month]}
+                  </h4>
+                </div>
+                <div className="flex flex-60 flex-wrap px-12">
+                  {numberOfDays.map((day, j) => (
+                    <button
+                      id={i}
+                      key={j}
+                      className={
+                        !activity.activityDays.includes(String(day))
+                          ? 'border-2 border-gray-300 flex-10 w-10 h-10 hover:border-blue-500 mx-1 my-2 rounded-full shadow-md'
+                          : 'bg-green-500 w-10 h-10 border-2 text-white flex-10 mx-1 my-2 rounded-full shadow-md'
+                      }
+                      value={day}
+                      onClick={(e) => props.handleClick(e)}
+                    >
+                      {day}
+                    </button>
+                  ))}
+                </div>
+                <div className="absolute right-4">
+                  <i
+                    className="fas fa-times-circle cursor-pointer text-red-400 text-2xl"
+                    id={i}
+                    onClick={(e) => props.handleRemove(e)}
+                  ></i>
+                </div>
+              </div>
+            ))}
+          </>
+        );
+      }
+
+      class Main extends React.Component {
+        constructor(props) {
+          super();
+          this.state = {
+            inputText: '',
+            activities: [],
+          };
+        }
+
+        componentDidMount() {
+          if (localStorage.activities) {
+            this.setState({
+              activities: JSON.parse(localStorage.activities) || [],
+            });
+          }
+          window.addEventListener(
+            'beforeunload',
+            this.handleUpdateLocalStorage
+          );
+        }
+
+        componentWillUnmount() {
+          window.removeEventListener(
+            'beforeunload',
+            this.handleUpdateLocalStorage
+          );
+        }
+
+        handleChange = ({ target }) => {
+          let { value } = target;
+          this.setState({ inputText: value });
+        };
+
+        handleSubmit = (event) => {
+          event.preventDefault();
+          if (this.state.inputText !== '') {
+            let activity = {
+              activityName: this.state.inputText,
+              activityDays: [],
+            };
+            this.setState({
+              activities: [...this.state.activities, activity],
+              inputText: '',
+            });
+          }
+        };
+
+        handleKeyDown = (event) => {
+          if (event.keyCode === 13) {
+            this.handleSubmit(event);
+          }
+        };
+
+        handleClick = (event) => {
+          let { id, value } = event.target;
+          let activities = this.state.activities;
+
+          if (!activities[id].activityDays.includes(value)) {
+            activities[id].activityDays.push(value);
+            let activity = activities[id].activityDays;
+            this.setState((prevState) => {
+              let updatedActivity = prevState.activities.map((a, i) => {
+                if (i === Number(id)) {
+                  return {
+                    ...a,
+                    activityDays: activity,
+                  };
+                }
+                return a;
+              });
+              return { activities: updatedActivity };
+            });
+          } else {
+            this.setState((prevState) => {
+              let index = activities[id].activityDays.findIndex(
+                (a) => a === String(value)
+              );
+              activities[id].activityDays.splice(index, 1);
+              let activity = activities[id].activityDays;
+              let updatedActivity = prevState.activities.map((a, i) => {
+                if (i === Number(id)) {
+                  return {
+                    ...a,
+                    activityDays: activity,
+                  };
+                }
+                return a;
+              });
+              return {
+                activities: updatedActivity,
+              };
+            });
+          }
+        };
+
+        handleUpdateLocalStorage = () => {
+          localStorage.setItem(
+            'activities',
+            JSON.stringify(this.state.activities)
+          );
+        };
+
+        handleRemove = ({ target }) => {
+          let { id } = target;
+          this.setState((prevState) => ({
+            activities: prevState.activities.filter(
+              (a) => a !== prevState.activities[id]
+            ),
+          }));
+        };
+
+        render() {
+          return (
+            <main className="my-12">
+              <h1 className="text-center text-3xl font-bold text-yellow-600">
+                Monthly Activity Tracker!
+              </h1>
+              <div>
+                <form className="my-8" onSubmit={this.handleSubmit}>
+                  <fieldset className="flex justify-center">
+                    <input
+                      type="text"
+                      name="input"
+                      placeholder="eg: Learn React"
+                      className=" py-2 px-10 border-l-2 border-t-2 border-b-2 border-gray-300 outline-none focus:border-blue-400"
+                      onChange={this.handleChange}
+                      value={this.state.inputText}
+                      onKeyDown={this.handleKeyDown}
+                    />
+                    <input
+                      type="submit"
+                      value="Add Activity"
+                      className="bg-green-400 text-white p-2 cursor-pointer"
+                    />
+                  </fieldset>
+                </form>
+              </div>
+              <section className="px-80 my-12">
+                {this.state.activities.length ? (
+                  <Activity
+                    {...this.state}
+                    handleRemove={this.handleRemove}
+                    handleClick={this.handleClick}
+                  />
+                ) : (
+                  ''
+                )}
+              </section>
+            </main>
+          );
+        }
+      }
+
+      ReactDOM.render(<Main />, document.getElementById('root'));
+    </script>
+  </body>
+</html>
